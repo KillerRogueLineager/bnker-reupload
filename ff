@@ -1,0 +1,71 @@
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+local UIS = game:GetService("UserInputService")
+local attached = false
+local victim = ""
+local Live = workspace:WaitForChild("Live")
+
+local function active()
+	local a = Instance.new("ScreenGui")
+	local b = Instance.new("Frame")
+	b.BackgroundTransparency = 0.7
+	b.BackgroundColor3 = Color3.new(0.133333, 1, 0)
+	b.Parent = a
+	a.Parent = Player.PlayerGui
+	game.Debris:AddItem(a,0.3)
+end
+local function inactive()
+	local a = Instance.new("ScreenGui")
+	local b = Instance.new("Frame")
+	b.BackgroundTransparency = 0.7
+	b.BackgroundColor3 = Color3.new(1, 0, 0)
+	b.Parent = a
+	a.Parent = Player.PlayerGui
+	game.Debris:AddItem(a,0.3)
+end
+
+UIS.InputBegan:Connect(function(key, gpe)
+	if gpe then return end
+	
+	if key.KeyCode == Enum.KeyCode.Z then
+		
+		if attached == false then
+		
+		for i,v in pairs(Live:GetChildren()) do
+			if game.Players:FindFirstChild(v.Name) then
+				if v:FindFirstChild("HumanoidRootPart") and attached == false and v.Name ~= Player.Name then
+					local mag = (Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
+					if mag <= 25 then
+						active()
+						attached = true
+						victim = v.Name
+					end
+				end
+			end
+		end
+		
+	elseif attached == true then
+		
+		inactive()
+		victim = ""
+		attached = false
+		
+	end
+	end
+end)
+
+task.spawn(function()
+	while true do
+		
+		if game.Players:FindFirstChild(victim) and attached == true then
+			
+			local enemyplr = game.Players:FindFirstChild(victim)
+			local enemychar = enemyplr.Character
+			
+			Character.HumanoidRootPart.CFrame = enemychar.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+			
+		end
+		
+		task.wait(0.001)
+	end
+end)
