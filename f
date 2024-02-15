@@ -6,7 +6,7 @@ local plr = game.Players.LocalPlayer
 
 -- Instances:
 
-local wl = {"KariiValkyrie","Mynoobypooby","Sxinisxxter","Scendedee","GetCurb_Stomped"}
+local wl = {"KariiValkyrie","Mynoobypooby","Sxinisxxter","Scendedee","GetCurb_Stomped","CastelIlan"}
 local scenwl = {"Mynoobypooby","Scendedee"}
 
 local ScreenGui = Instance.new("ScreenGui")
